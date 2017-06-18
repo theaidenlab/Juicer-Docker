@@ -9,9 +9,6 @@ FROM ubuntu
 # File Author / Maintainer
 MAINTAINER Neva C. Durand 
 
-# Version number contained in image
-ADD VERSION .
-
 # Update the repository sources list
 # Install base packages: java, git, wget
 RUN apt-get update && apt-get install -y \
@@ -65,9 +62,14 @@ ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/restriction_sites/hg19_Hi
 ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/restriction_sites/hg19_MboI.txt restriction_sites
 ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/restriction_sites/hg19_NcoI.txt restriction_sites
 
+# Version number contained in image
+ADD VERSION .
+
 # For sorting, LC_ALL is C
 ENV LC_ALL C
 ENV PATH=/opt:/opt/scripts:/opt/scripts/common:$PATH
 
 ENTRYPOINT ["juicer.sh", "-D", "/opt"]
 CMD ["-h"]
+
+
