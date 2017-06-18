@@ -1,6 +1,6 @@
 set -ex
 # docker hub username
-USERNAME=nchernia
+USERNAME=aidenlab
 # image name
 IMAGE=juicer
 # ensure we're up to date
