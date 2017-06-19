@@ -19,13 +19,13 @@ Neva C. Durand, Muhammad S. Shamim, Ido Machol, Suhas S. P. Rao, Miriam H. Huntl
    mkdir fastq
    mv HIC003*.fastq.gz fastq
 ```
-4. Type `docker run nchernia/juicer:latest`.  After downloading the image, the usage message should appear.
-5. Run Juicer on the test set via `docker run -v /path/to/testdir:/data nchernia/juicer:latest -d /data`
+4. Type `docker run aidenlab/juicer:latest`.  After downloading the image, the usage message should appear.
+5. Run Juicer on the test set via `docker run -v /path/to/testdir:/data aidenlab/juicer:latest -d /data`
 
 # More details
 The parameter `-v /path/to/testdir:/data` mounts your directory as /data in the Docker image.  
 
-Everything after `nchernia/juicer:latest` is a command to Juicer, not a Docker command.  So the parameter `-d /data` tells
+Everything after `aidenlab/juicer:latest` is a command to Juicer, not a Docker command.  So the parameter `-d /data` tells
 Juicer that your files live at the mount point `/data`.  The results of the Juicer run will be written out to this directory;
 you will see directories `aligned` and `splits` created underneath your test directory `/path/to/testdir`
 
