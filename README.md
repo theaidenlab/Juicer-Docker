@@ -19,7 +19,7 @@ Neva C. Durand, Muhammad S. Shamim, Ido Machol, Suhas S. P. Rao, Miriam H. Huntl
    mkdir fastq
    mv HIC003*.fastq.gz fastq
 ```
-4. Type `docker run aidenlab/juicer:latest`.  After downloading the image, the usage message should appear.
+4. Type `docker run aidenlab/juicer:latest`  After downloading the image, the usage message should appear.
 5. Run Juicer on the test set via `docker run -v /path/to/testdir:/data aidenlab/juicer:latest -d /data`
 
 # More details
