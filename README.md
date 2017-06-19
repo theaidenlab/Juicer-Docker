@@ -39,4 +39,4 @@ Please see [the Juicer documentation](https://github.com/theaidenlab/juicer/wiki
 On a Mac, you might have to change your preferences to add memory for BWA.
 
 Click the Docker whale to edit your Preferences. Then edit your memory and CPUs in the Advanced tab.
-<img src="https://github.com/theaidenlab/Juicer-Docker/wiki/images/docker_mac2.png"/><img src="https://github.com/theaidenlab/Juicer-Docker/wiki/images/docker_mac1.png" style="width: 100px;"/>
+<img src="https://github.com/theaidenlab/Juicer-Docker/wiki/images/docker_mac2.png" style="width: 100px;"/><img src="https://github.com/theaidenlab/Juicer-Docker/wiki/images/docker_mac1.png" style="width: 100px;"/>
