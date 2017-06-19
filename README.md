@@ -31,6 +31,12 @@ you will see directories `aligned` and `splits` created underneath your test dir
 
 In particular, you can call Juicer with all of the usual flags.  We have stored the hg19 reference genome in the image along
 with associated restriction site files, but other genomes / restriction site files should be sent in via the `-z` and `-y` flags, 
-respectively.
+respectively.  To change the number of threads used by BWA, use the `-t` flag.
 
 Please see [the Juicer documentation](https://github.com/theaidenlab/juicer/wiki) for extensive usage information.
+
+## Macintosh special notes
+On a Mac, you might have to change your preferences to add memory for BWA.
+
+Click the Docker whale to edit your Preferences. Then edit your memory and CPUs in the Advanced tab.
+<img src="https://github.com/theaidenlab/Juicer-Docker/wiki/images/docker_mac2.png"/><img src="https://github.com/theaidenlab/Juicer-Docker/wiki/images/docker_mac1.png" style="width: 100px;"/>
