@@ -35,6 +35,15 @@ respectively.  To change the number of threads used by BWA, use the `-t` flag.
 
 Please see [the Juicer documentation](https://github.com/theaidenlab/juicer/wiki) for extensive usage information.
 
+## Test sets
+The test set above is the HIC003 fastqs from Rao & Huntley et al. | Cell 2014.  A larger test set, consisting of chromosome 19 from the combined GM12878 map from that paper, is available below.  This test set will produce domains (and theoretically loops, though HiCCUPS requires GPUs and Docker does not support them).
+
+```
+    wget  https://s3.amazonaws.com/juicerawsmirror/opt/juicer/work/MBR19/fastq/chr19_R1.fastq.gz
+    wget  https://s3.amazonaws.com/juicerawsmirror/opt/juicer/work/MBR19/fastq/chr19_R2.fastq.gz
+```
+
+
 ## Macintosh special notes
 On a Mac, you might have to change your preferences to add memory for BWA.
 
