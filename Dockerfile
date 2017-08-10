@@ -37,14 +37,14 @@ RUN cd bwa-0.7.12/ && make
 RUN ln -s bwa-0.7.12/bwa bwa
 
 # Install Juicer
-ADD https://github.com/theaidenlab/juicer/archive/1.5.5.zip .
-RUN unzip 1.5.5.zip
-RUN cd juicer-1.5.5 && chmod +x CPU/* CPU/common/* 
+ADD https://github.com/theaidenlab/juicer/archive/1.5.6.zip .
+RUN unzip 1.5.6.zip
+RUN cd juicer-1.5.6 && chmod +x CPU/* CPU/common/* 
 
 # Install Juicer tools
-ADD http://hicfiles.tc4ga.com.s3.amazonaws.com/public/juicer/juicer_tools.1.6.2_linux_jcuda.0.8.jar /opt/juicer-1.5.5/CPU/common
-RUN ln -s /opt/juicer-1.5.5/CPU/common/juicer_tools.1.6.2_linux_jcuda.0.8.jar /opt/juicer-1.5.5/CPU/common/juicer_tools.jar
-RUN ln -s juicer-1.5.5/CPU scripts
+ADD http://hicfiles.tc4ga.com.s3.amazonaws.com/public/juicer/juicer_tools.1.7.5_linux_x64_jcuda.0.8.jar /opt/juicer-1.5.6/CPU/common
+RUN ln -s /opt/juicer-1.5.6/CPU/common/juicer_tools.1.7.5_linux_x64_jcuda.0.8.jar /opt/juicer-1.5.6/CPU/common/juicer_tools.jar
+RUN ln -s juicer-1.5.6/CPU scripts
 
 # Grab reference for hg19
 RUN mkdir references
