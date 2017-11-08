@@ -31,36 +31,20 @@ RUN locale-gen en_US.UTF-8
 WORKDIR /opt/
 
 # Install BWA
-ADD https://github.com/lh3/bwa/archive/0.7.12.zip .
-RUN unzip 0.7.12.zip 
-RUN cd bwa-0.7.12/ && make
-RUN ln -s bwa-0.7.12/bwa bwa
+ADD https://github.com/lh3/bwa/archive/v0.7.17.zip .
+RUN unzip v0.7.17.zip 
+RUN cd bwa-0.7.17/ && make
+RUN ln -s bwa-0.7.17/bwa bwa
 
 # Install Juicer
-ADD https://github.com/theaidenlab/juicer/archive/1.5.6.zip .
-RUN unzip 1.5.6.zip
-RUN cd juicer-1.5.6 && chmod +x CPU/* CPU/common/* 
+ADD https://github.com/theaidenlab/juicer/archive/1.6.0.zip .
+RUN unzip 1.6.0.zip
+RUN cd juicer-1.6.0 && chmod +x CPU/* CPU/common/* 
 
 # Install Juicer tools
-ADD http://hicfiles.tc4ga.com.s3.amazonaws.com/public/juicer/juicer_tools.1.7.5_linux_x64_jcuda.0.8.jar /opt/juicer-1.5.6/CPU/common
-RUN ln -s /opt/juicer-1.5.6/CPU/common/juicer_tools.1.7.5_linux_x64_jcuda.0.8.jar /opt/juicer-1.5.6/CPU/common/juicer_tools.jar
-RUN ln -s juicer-1.5.6/CPU scripts
-
-# Grab reference for hg19
-RUN mkdir references
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/references/Homo_sapiens_assembly19.fasta.ann references
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/references/Homo_sapiens_assembly19.fasta.amb references
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/references/Homo_sapiens_assembly19.fasta.bwt references
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/references/Homo_sapiens_assembly19.fasta.sa references
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/references/Homo_sapiens_assembly19.fasta.pac references
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/references/Homo_sapiens_assembly19.fasta references
-
-# Grab restriction site for hg19
-RUN mkdir restriction_sites
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/restriction_sites/hg19_DpnII.txt restriction_sites
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/restriction_sites/hg19_HindIII.txt restriction_sites
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/restriction_sites/hg19_MboI.txt restriction_sites
-ADD http://juicerawsmirror.s3.amazonaws.com/opt/juicer/restriction_sites/hg19_NcoI.txt restriction_sites
+ADD http://hicfiles.tc4ga.com.s3.amazonaws.com/public/juicer/juicer_tools.1.7.6_jcuda.0.8.jar /opt/juicer-1.6.0/CPU/common
+RUN ln -s /opt/juicer-1.6.0/CPU/common/juicer_tools.1.7.6_jcuda.0.8.jar /opt/juicer-1.6.0/CPU/common/juicer_tools.jar
+RUN ln -s juicer-1.6.0/CPU scripts
 
 # Version number contained in image
 ADD VERSION .
