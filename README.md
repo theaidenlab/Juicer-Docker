@@ -20,7 +20,8 @@ Neva C. Durand, Muhammad S. Shamim, Ido Machol, Suhas S. P. Rao, Miriam H. Huntl
    mv HIC003*.fastq.gz fastq
 ```
 4. Type `docker run aidenlab/juicer:latest`  After downloading the image, the usage message should appear.
-5. Run Juicer on the test set via `docker run -v /path/to/testdir:/data aidenlab/juicer:latest -d /data`
+5. Have your reference and restriction site file available under a directory (here juicedir)
+5. Run Juicer on the test set via `docker run -v /path/to/testdir:/data -v /path/to/juicedir:/juicedir aidenlab/juicer:latest -d /data -z /juicedir/references/Homo_sapiens_assembly19.fasta -y /juicedir/restriction_sites/hg19_MboI.txt -p hg19 -s MboI`
 
 # More details
 The parameter `-v /path/to/testdir:/data` mounts your directory as /data in the Docker image.  
@@ -29,9 +30,11 @@ Everything after `aidenlab/juicer:latest` is a command to Juicer, not a Docker c
 Juicer that your files live at the mount point `/data`.  The results of the Juicer run will be written out to this directory;
 you will see directories `aligned` and `splits` created underneath your test directory `/path/to/testdir`
 
-In particular, you can call Juicer with all of the usual flags.  We have stored the hg19 reference genome in the image along
-with associated restriction site files, but other genomes / restriction site files should be sent in via the `-z` and `-y` flags, 
-respectively.  To change the number of threads used by BWA, use the `-t` flag.
+The parameters `-z /juicedir/references/Homo_sapiens_assembly19.fasta` and `-y /juicedir/restriction_sites/hg19_MboI.txt` tell Juicer
+where to look for your reference file/bwa index files and your restriction site file.  The parameter `-p hg19` gives the genome ID or 
+alternatively, location of the chrom.sizes file.
+
+You can call Juicer with all of the usual flags.  For instance, to include fragment maps, use the `-f` flag. To change the number of threads used by BWA, use the `-t` flag.  To ignore any restriction site information, use `-s none`.  
 
 Please see [the Juicer documentation](https://github.com/theaidenlab/juicer/wiki) for extensive usage information.
 
