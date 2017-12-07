@@ -1,36 +1,60 @@
 
 workflow hic {
     Array[Array[String]] fastqs
+    Array[Array[String]] bams
+    Array[String] filtered_deduped_bam
+    
+    # not sure if these have to be arrays
+    String merged_nodups_pairs
+    String hic_file
 
     String genome_tsv 		# reference genome data TSV file including
 							# all important genome specific data file paths
 							# and parameters
 
+
+    # optional may be we add in the future
+	Boolean? align_only 	# disable downstream analysis
+							# after alignment
+    Boolean? hic_only # disable downstream analysis
+					  # after hic matrix creation
+    
     call inputs { input:
         genome_tsv = genome_tsv,
+        fastqs = fastqs,
+		bams = bams,
+		filtered_deduped_bam = filtered_deduped_bam
 
     }
 
-    # scatter mapping of fastq pairs (if there are multiple pairs from the same library)
-    scatter( i in range(length(fastqs)) ) {
-        call align { input:
-            idx_tar = inputs.genome['bwa_idx_tar'],
-            fastqs_pair = fastqs[i]
+    if ( inputs.is_before_bam ) {
+        # scatter mapping of fastq pairs (if there are multiple pairs from the same library)
+        scatter( i in range(length(fastqs)) ) {
+            call align { input:
+                idx_tar = inputs.genome['bwa_idx_tar'],
+                fastqs_pair = fastqs[i]
+            }
         }
     }
 
-    # scatter merging of all the BAM files that are not aligned.bam
-    scatter( bam_type in [ align.collisions_log_bam, 
-                           align.mapq0_bam, 
-                           align.collisions_bam, 
-                           align.aligned_bam] ){
-        call merge {input:
-            bam_files = bam_type
+    if ( inputs.is_before_deduped_filtered ) {
+
+        collisions_log_bam_array = 
+
+        # scatter merging of all the BAM files that are not aligned.bam
+        scatter( bam_type in [ if defined(align.collisions_log_bam) then align.collisions_log_bam else bams[0], 
+                                ####> same as the line of collisions_log_bam in the next three lines
+                            align.mapq0_bam, 
+                            align.collisions_bam, 
+                            align.aligned_bam] ){
+            call merge {input:
+                bam_files = bam_type
+            }
         }
-    }
-    # merge filter dedup of the aligned BAMs 
-    call filter_dedup_merge { input:
-        bam_files = align.aligned_bam
+        # merge filter dedup of the aligned BAMs 
+        call filter_dedup_merge { input:
+            bam_files = align.aligned_bam
+        }
     }
 
     # generate .hic from pairs file (could be easily switched to BAM file)
@@ -38,12 +62,39 @@ workflow hic {
         pairs_file = filter_dedup_merge.pairs_file
     }
 
+    # generate loops.bedpe
+    # generate TADs.bedpe
+
 }
 
 task inputs {
     File genome_tsv
+    Array[Array[String]] fastqs
+    Array[Array[String]] bams
+    Array[String] filtered_deduped_bam
+
+    command <<<
+		python <<CODE
+		name = ['fastq','bam','deduped_filtered']
+		arr = [${length(fastqs)},${length(bams)},
+		       ${length(deduped_filtered)}]
+		num_rep = max(arr)
+		type = name[arr.index(num_rep)]
+
+		with open('type.txt','w') as fp:
+		    fp.write(type)		    
+		CODE
+	>>>
+
     outputs {
         Map[String,String] genome = read_map(genome_tsv)
+        String type = read_string("type.txt")
+        Boolean is_before_bam =
+			type=='fastq'
+		Boolean is_before_deduped_filtered =
+			type=='fastq' || type=='bam'
+		Boolean is_before_hic =
+			type=='fastq' || type=='bam' ||	type=='deduped_filtered'
     }
 }
 
@@ -62,7 +113,7 @@ task align {
         File unmapped_bam = glob('*type_4.bam')[0]
         File aligned_bam = glob('*type_5.bam')[0]
 
-        File quality_metric = glob('*alignment.qc.log')[0]
+        File quality_metric = glob('*alignment_qc.log')[0]
     }
 }
 
@@ -90,6 +141,8 @@ task filter_dedup_merge {
 
         # potentially pairs file will be removed later or retained for consistency with 4DN?
         File pairs_file = glob('merged_no_dups.txt')[0]
+        
+        File quality_metric = glob('*merge_qc.log')[0]
     }
 }
 

@@ -14,21 +14,6 @@
     "comment for filtered deduped bam" : "",
 	"hic.filtered_deduped_bam" : [],
 	
-
-	"atac.bowtie2.cpu" : 4,
-	"atac.bowtie2.mem_mb" : 16000,
-	"atac.bowtie2.time_hr" : 36,
-
-	"atac.filter.cpu" : 2,
-	"atac.filter.mem_mb" : 12000,
-	"atac.filter.time_hr" : 23,
-
-	"atac.macs2_mem_mb" : 16000,
-
-	"atac.smooth_win" : 73,
-	"atac.enable_idr" : true,
-	"atac.idr_thresh" : 0.05,
-
-	"atac.qc_report.name" : "ENCSR889WQX",
-	"atac.qc_report.desc" : "ATAC-seq on Mus musculus C57BL/6 frontal cortex adult"
+	"hic.bwa.cpu" : 4,
+	"hic.bwa.mem_mb" : 16000,
 }
