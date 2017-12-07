@@ -1,0 +1,34 @@
+{
+    "hic.genome_tsv" : "hg38.tsv",
+    
+    "comment for fastqs" : "multiple (paired-end) runs from the same library, mixing multiplle libraries will not be dedupped properly",
+    
+    "hic.fastqs" : [
+        ["/read1/ENCFF439VSY.fastq.gz", "/read2/ENCFF325FCQ.fastq.gz"],
+        ["/read1/ENCFF123CFG.fastq.gz", "/read2/ENCFF452POY.fastq.gz"]
+    ],
+
+    "comment for unfiltered bams" : "2D array of BAMS, each entry containing 5 BAMs in the order of collisions_log, mapq0, collisions, unmapped, aligned",
+    "hic.bams" : [],
+    
+    "comment for filtered deduped bam" : "",
+	"hic.filtered_deduped_bam" : [],
+	
+
+	"atac.bowtie2.cpu" : 4,
+	"atac.bowtie2.mem_mb" : 16000,
+	"atac.bowtie2.time_hr" : 36,
+
+	"atac.filter.cpu" : 2,
+	"atac.filter.mem_mb" : 12000,
+	"atac.filter.time_hr" : 23,
+
+	"atac.macs2_mem_mb" : 16000,
+
+	"atac.smooth_win" : 73,
+	"atac.enable_idr" : true,
+	"atac.idr_thresh" : 0.05,
+
+	"atac.qc_report.name" : "ENCSR889WQX",
+	"atac.qc_report.desc" : "ATAC-seq on Mus musculus C57BL/6 frontal cortex adult"
+}
