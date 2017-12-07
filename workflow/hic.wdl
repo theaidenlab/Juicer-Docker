@@ -102,6 +102,10 @@ task align {
     Array[File] fastqs_pair # [end_id]
     File idx_tar            #reference bwa index tar file
     
+    # resource
+	Int? cpu
+	Int? mem_mb
+
     command {
         align using bwa fastq_pair
     }
@@ -115,6 +119,13 @@ task align {
 
         File quality_metric = glob('*alignment_qc.log')[0]
     }
+
+    runtime {
+        # here we will specify the docker download path
+		cpu : select_first([cpu,2])
+		memory : "${select_first([mem_mb,'10000'])} MB"
+		
+	}
 }
 
 task merge {
@@ -127,6 +138,10 @@ task merge {
     output {
         File merged_bam = glob('*.bam')[0]
     }
+
+    runtime {
+        # here we will specify the docker download path
+	}
 }
 
 task filter_dedup_merge {
@@ -144,6 +159,10 @@ task filter_dedup_merge {
         
         File quality_metric = glob('*merge_qc.log')[0]
     }
+    
+    runtime {
+        # here we will specify the docker download path
+	}
 }
 
 task generate_hic {
